@@ -1,0 +1,8 @@
+Remove all third-party modules from the virtual environment by recreating it.
+
+Copy code
+deactivate
+python3 -m venv .labenv --prompt="CloudAcademy Env" --clear
+source .labenv/bin/activate
+python3 -m pip install --upgrade pip
+

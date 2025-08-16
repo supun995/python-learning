@@ -1,0 +1,51 @@
+🔀 Parallelism with Threads vs AsyncIO in Python
+Concept	Threads (parallelism)	AsyncIO (concurrency)
+Type	Preemptive parallelism	Cooperative concurrency
+Execution	Multiple threads run in parallel (simulated in CPython)	One thread runs multiple tasks by switching between them
+Switching	Done by OS scheduler	Done by Python (manually via await)
+Best for	CPU-bound & blocking I/O	I/O-bound (like HTTP, DB, etc.)
+Requires	threading module	asyncio + async/await syntax
+Overhead	Higher (threads are heavier)	Lower (no real threads)
+Thread-safe?	Needs locks for shared data	Generally single-threaded, safer
+
+Threads (Parallelism)
+Simulate real parallel execution
+
+Python threads are limited by the GIL (Global Interpreter Lock), so they don’t speed up CPU-bound tasks.
+
+But they’re great for parallel I/O — like downloading files.
+
+AsyncIO (Concurrency)
+Runs multiple tasks in a single thread using await to pause and resume functions.
+
+Great for non-blocking I/O.
+
+Not useful for CPU-bound tasks unless combined with threads or processes.
+
+import asyncio
+
+
+async def task():
+    print("Start")
+    await asyncio.sleep(2)
+    print("End")
+
+
+async def main():
+    await asyncio.gather(task(), task())
+
+
+asyncio.run(main())
+
+#Both tasks start immediately and await the sleep — they concurrently share the thread.
+
+Threads:
+
+|-----Task 1-----|
+|-----Task 2-----|
+(Parallel lines)
+AsyncIO:
+
+|-Task 1-|   |-Task 1 resume-|
+    |-Task 2-|   |-Task 2 resume-|
+(Switches between)

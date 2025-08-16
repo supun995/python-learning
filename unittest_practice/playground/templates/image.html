@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block crumbs%}
+<style>
+    .breadcrumbs {
+        padding-left: 100px;
+    }
+</style>
+
+<ul class="breadcrumbs">
+    <li><a href="{{ url_for('index') }}">Home</a></li>
+    <li><a class="current" href="{{ url_for('image', name=image_name) }}">Image</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row small-up-2 medium-up-3 large-up-4">
+    <div class="column">
+        {% set static_image_name = 'images/' + image_name %}
+        <img class="thumbnail" src="{{ url_for('static', filename=static_image_name) }}">
+    </div>
+</div>
+{% endblock %}

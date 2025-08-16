@@ -1,0 +1,223 @@
+Requirement Specifiers
+Requirement specifiers
+, opens in a new tab are a format used to define the dependencies of a package. Having a consistent predefined format enables tools such as pip to locate acceptable distribution packages.
+
+Dependency requirements can differ based on package versions, operating systems, Python versions, etc. Requirement specifiers are designed to be flexible enough to range from general to granular requirements.
+
+There are two forms of requirement specifier: name-based and URL-based.
+
+Name-based
+Packages residing in a package index — such as the Python Package Index — are referenced by name. Names within a single package index are unique to prevent conflicts.
+
+The anatomy of name-based requirement specifiers
+
+
+Name-based Request Specifiers
+
+Name-based specifiers require only a package name; all other fields are optional.
+
+Version specifiers are used to define acceptable package versions. Zero or more can be provided. The requirement specifier schema is built on top of a previously existing version scheme for packages.
+PEP 440
+, opens in a new tab defines a version scheme for Python distribution packages.
+
+Versions are commonly defined as major.minor or major.minor.micro.
+
+Examples:
+
+0.3
+0.4
+1.0.2
+1.0.3
+2022.1
+...
+2022.12
+Pip is able to discern the release order when packages follow the defined numerically increasing scheme. Understanding the release order enables pip to recognize the difference between release versions.
+
+Version specifiers include several operators used to define acceptable package versions.
+
+Version Operators	Meaning
+~=	Compatible version
+==	Exact version
+!=	Exclude Version
+<=	Less than or equal to version
+>=	Greater than or equal to version
+<	Less than version
+>	Greater than version
+===	Exact string match
+All operators are version-aware except for the === operator. The === operator compares the package version to the provided value as text. Only exact string matches will evaluate to true. Version-aware operators are able to break down versions into discrete fields for more advanced version comparison.
+
+Using PEP 440 style versions allows for the use of wildcards. When pip encounters a wildcard it attempts to locate a package with the largest acceptable version number for the field using the wildcard.
+
+Instructions
+Use a wildcard to install the latest micro version for a specific major.minor version.
+
+NOTE: Tagged versions of rich are located
+here
+, opens in a new tab for reference.
+
+Copy code
+python3 -m pip install rich==12.4.*
+
+
+Review the details of the installed module.
+
+NOTE: Notice the version displayed is now the latest micro version of 12.4. Your micro version may differ from the version in the screenshot below.
+
+Copy code
+python3 -m pip show rich
+
+
+
+Multiple version specifiers are separated by a comma. The specifier in the command below (rich==12.4.*, < 12.4.4) instructs pip to install a version of rich with a major version of 12, a minor version of 4 and the largest possible micro version. It also instructs pip to ensure the version is less than 12.4.4.
+
+Install the latest micro version up to but not including 12.4.4.
+
+NOTE: The requirement specifier is wrapped in quotes to avoid characters being misinterpreted by the shell.
+
+Copy code
+python3 -m pip install "rich==12.4.*, < 12.4.4"
+
+
+Review the details of the installed module.
+
+NOTE: Notice the version displayed is now version 12.4.3.
+
+Copy code
+python3 -m pip show rich
+
+
+Environment markers are used to determine if a dependency is required for the given runtime environment.
+
+Marker	Code Equivalent
+os_name	os.name
+sys_platform	sys.platform
+platform_machine	platform.machine()
+platform_python_implementation	platform.python_implementation()
+platform_release	platform.release()
+platform_system	platform.system()
+platform_version	platform.version()
+python_version	'.'.join(platform.python_version_tuple()[:2])
+python_full_version	platform.python_version()
+implementation_name	sys.implementation.name
+Check the current Python version.
+
+NOTE: Notice the Python version is greater than 3.8. Your Python version may differ from the version in the screenshot below.
+
+Copy code
+python3 --version
+
+Environment markers exist at the end of the specifier and are separated by a single semicolon. The command below will only install rich if the Python version is greater than 3.8.
+
+Install rich if the Python version is greater than 3.8.
+
+Copy code
+python3 -m pip install "rich; python_version>'3.8'"
+
+
+Environment markers can be combined using and and or operators.
+
+Install rich using multiple markers.
+
+Copy code
+python3 -m pip install "rich; python_version>'3.8' and sys_platform=='linux'"
+
+
+Observe a marker evaluating to false.
+
+NOTE: The darwin platform represents macOS.
+
+Copy code
+python3 -m pip install "rich; python_version>'3.8' and sys_platform=='darwin'"
+
+
+Extras are optional modules provided by the specified package. Optional dependencies are specified in square brackets. Multiple extras are separated by a comma.
+
+Show the currently installed modules.
+
+Copy code
+python3 -m pip list
+
+Install an extra dependency of rich.
+
+Copy code
+python3 -m pip install rich[jupyter]
+
+
+Show the installed modules.
+
+NOTE: Notice all the new modules installed along with the optional jupyter dependency.
+
+Copy code
+python3 -m pip list
+
+URL-based
+Packages can be installed using URLs. URLs are commonly used to install private modules directly from version control.
+
+The anatomy of URL-based requirement specifiers
+
+
+URL-based Request Specifiers
+
+The install command is capable of installing packages from these common version control systems:
+
+Version Control System	Prefix
+Bazaar	bzr+
+Git	git+
+Mercurial	hg+
+Subversion	svn+
+The
+official documentation
+, opens in a new tab includes details for each version control system.
+
+Instructions
+To install from a version control system a URL is included in the requirement specifier. The url must include a prefix indicating the type of version control system followed by a plus sign.
+
+Install the rich module from Github.
+
+NOTE: The package name and URL are separated by an @ symbol.
+
+Copy code
+python3 -m pip install "rich @ git+https://github.com/Textualize/rich.git"
+
+
+Review the details using the show command.
+
+NOTE: Notice the version displayed is now the latest version available.
+
+Copy code
+python3 -m pip show rich
+
+
+Pip includes a means of installing specific revisions from version control systems. Different version control systems offer different ways of identifying specific revisions. Git uses
+git references
+, opens in a new tab, which encompasses branches, tags, and commit hashes.
+
+To include a VCS version specifier an @ symbol is appended to the end of the URL followed by a
+VCS specific version identifier
+, opens in a new tab.
+
+In the example below 12.3.0 represents a git tag.
+
+Install a specific version of the rich module from Github.
+
+Copy code
+python3 -m pip install "rich @ git+https://github.com/Textualize/rich.git@v12.3.0"
+
+
+Review the details using the show command.
+
+NOTE: Notice the version displayed is now v12.3.0 rather than the latest version.
+
+Copy code
+python3 -m pip show rich
+
+
+
+URL-based requirement specifiers support extras and environment markers.
+
+Install a specific version of the rich module from Github with extras and environment markers.
+
+Copy code
+python3 -m pip install "rich[jupyter] @ git+https://github.com/Textualize/rich.git@v12.3.0; python_version>'3.8' and sys_platform=='linux'"
+
+

@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Filter</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/foundation.min.css') }}">
+</head>
+
+<body>
+
+
+  <!-- Start Top Bar -->
+  <div class="top-bar">
+    <div class="row">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li><a href="{{ url_for('index') }}"><img class="thumbnail" style="width: 300px;"
+                src="{{ url_for('static', filename='ca_logo.png') }}"></a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          {% if session.get('username') %}
+          <li><span>User: {{ session['username'] }}</span>
+          <li><a href="{{ url_for('logout') }}">Log Out</a>
+            {% else %}
+          <li><a href="{{ url_for('login') }}">Log In</a>
+            {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End Top Bar -->
+
+  {% block crumbs %}{% endblock %}
+
+  {# Display any flashed messages to the user. #}
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="callout primary">
+      <div class="row column">
+        {% for message in messages %}
+        <p class="lead flash">{{ message }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  {% endwith %}
+
+  <br>
+  {% block content %}{% endblock %}
+  <hr>
+
+  {% if session.get('username') %}
+  <div class="row">
+    <div class="medium-6 columns">
+    </div>
+    <div class="medium-6 columns">
+      <h3>Create Effect</h3>
+      <form method="post" action="{{ url_for('image') }}" enctype="multipart/form-data">
+        <label>Image File
+          <input type="file" placeholder="image" name="image">
+        </label>
+
+        <label>Filter Type
+          <select name="effect">
+            <option value="blur">Blur</option>
+            <option value="mode">Mode</option>
+          </select>
+        </label>
+
+        <input type="submit" class="button expanded" value="submit">
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+
+  <script src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/foundation.js') }}"></script>
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST" action="{{ url_for('login') }}">
+  <div class="row">
+    <div class="small-8">
+      <div class="row">
+        <div class="small-3 columns">
+          <label for="right-label" class="right">Username</label>
+        </div>
+        <div class="small-9 columns">
+            <input type="text"  placeholder="Admin" name="username">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="small-8">
+      <div class="row">
+        <div class="small-3 columns">
+          <label for="right-label" class="right">Password</label>
+        </div>
+        <div class="small-9 columns">
+            <input type="password"  placeholder="magic" name="password">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-8">
+      <div class="row">
+        <div class="small-3 columns">
+        </div>
+        <div class="small-9 columns">
+            <input type="submit" value="login">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+{% endblock %}

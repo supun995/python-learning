@@ -1,0 +1,48 @@
+ERROR:blackjack:game stopped unexpectedly.
+Traceback (most recent call last):
+  File "C:\DATA\Tifansi\Code Repositories\python-demo\logging\playground\blackjack.py", line 222, in <module>
+    play()
+    ~~~~^^
+  File "C:\DATA\Tifansi\Code Repositories\python-demo\logging\playground\blackjack.py", line 217, in play
+    play_round(player, dealer, deck)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\DATA\Tifansi\Code Repositories\python-demo\logging\playground\blackjack.py", line 133, in play_round
+    while (rounds_wager := bet_callable(player.money)) > player.money:
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\DATA\Tifansi\Code Repositories\python-demo\logging\playground\blackjack.py", line 25, in prompt_for_bet
+    wager = int(input(f'How much of your ${money} would you like to wager? '))
+                ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+KeyboardInterrupt
+INFO:blackjack:play_round: rounds_wager=100
+DEBUG:blackjack:play_round: dealer.cards=[A♠, ??]
+DEBUG:blackjack:play_round: player.cards=[Q♠, K♠]
+DEBUG:blackjack:score: cards=[Q♠, K♠]
+INFO:blackjack:score: score=20
+DEBUG:blackjack:score: cards=[A♠, ??]
+INFO:blackjack:score: score=11
+INFO:blackjack:play_round: rounds_wager=100
+DEBUG:blackjack:play_round: dealer.cards=[Q♠, ??]
+DEBUG:blackjack:play_round: player.cards=[A♠, K♠]
+DEBUG:blackjack:score: cards=[A♠, K♠]
+INFO:blackjack:score: score=11
+DEBUG:blackjack:score: cards=[Q♠, ??]
+INFO:blackjack:score: score=20
+DEBUG:blackjack:play_round: dealer.cards=[Q♠, ??]
+DEBUG:blackjack:score: cards=[Q♠, ??]
+INFO:blackjack:score: score=20
+DEBUG:blackjack:score: cards=[A♠, K♠]
+INFO:blackjack:score: score=11
+INFO:blackjack:play_round: dealers_score=20
+INFO:blackjack:play_round: players_score=11
+INFO:blackjack:play_round: winner='dealer'
+DEBUG:blackjack:score: cards=[A♠, K♠]
+INFO:blackjack:score: score=11
+INFO:blackjack:play_round: GameOver
+INFO:blackjack:prompt_for_bet: wager=100
+DEBUG:blackjack:score: cards=[2♠, 3♠]
+INFO:blackjack:score: score=5
+DEBUG:blackjack:score: cards=[K♠, Q♠]
+INFO:blackjack:score: score=20
+DEBUG:blackjack:score: cards=[K♠, A♠]
+INFO:blackjack:score: score=11
